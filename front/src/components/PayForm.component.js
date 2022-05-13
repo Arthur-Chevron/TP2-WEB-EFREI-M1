@@ -3,8 +3,6 @@ import { getCreditCardBalance, transactionPay, getAll } from "../services/card.s
 
 const PayForm = () => {
 
-    const [balance, setBalance] = useState("Payment dont start")
-
     const [cardData, setCardData] = useState({
         card_secret: '',
         card_holder_name: '',
@@ -21,6 +19,8 @@ const PayForm = () => {
         })
     }
 
+    const [message, setMessage] = useState("Payment dont start")
+
     const [allCard, setAllCard] = useState([])
 
     const addCardInArrayAllCard = (newValue) => {
@@ -30,6 +30,7 @@ const PayForm = () => {
     useEffect( () => {
         getAll().then(r => {
             r.data.forEach(item => {
+                console.log(item)
                 addCardInArrayAllCard(item)
             })
         })
@@ -37,52 +38,77 @@ const PayForm = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
-        setBalance("Payment in process")
+        setMessage("Payment in process")
         // prevent negative amount
         if (cardData.amount <= 0) {
-            setBalance("Negative amount")
+            setMessage("Negative amount")
             return console.log("Negative amount")
         }
+        // prevent dont all information
+        if (
+            cardData.card_holder_name === "" ||
+            cardData.card_secret === "" ||
+            cardData.card_validity === "" ||
+            cardData.ccv_code === "" ||
+            cardData.card_number === "") {
+            setMessage("Missing card information")
+            return console.log("Missing card information")
+        }
         // prevent not enough found
-        const res = await getCreditCardBalance(allCard[0])
+        const res = await getCreditCardBalance(cardData)
         if (res.data.balance <= cardData.amount) return console.log("Not enough found")
         // pay the transaction with the amount
-        allCard[0].amount = cardData.amount
-        const res2 = await transactionPay(allCard[0])
+        const res2 = await transactionPay(cardData)
         // if success show the new balance of the card
         if (res2.data !== "payment success") {
-            setBalance("Payment failed, balance : " + res.data.balance + "$")
+            setMessage("Payment failed, balance : " + res.data.balance + "$")
             return console.log("Payment failed")
         }
-        const res3 = await getCreditCardBalance(allCard[0])
-        setBalance("Payement success, the balance of your card is now " + res3.data.balance + "$")
+        const res3 = await getCreditCardBalance(cardData)
+        setMessage("Payement success, the balance of your card is now " + res3.data.balance + "$")
     }
 
     return (
         <div className="one-card margin-bottom">
-            <p className="light-purple-gradient">Select the amount you need to pay (min: 0$ and max: 10000$)</p>
-            <label>Amount</label>
-            <input onChange={onChangeHandler} className="input-in-card" type="number" min="0" max="10000" name="amount"/>
+            <p className="light-purple-gradient">Select the amount of your purchase</p>
 
-            <p className="light-purple-gradient">Hello, complete the form bellow to pay.</p>
+            <div className="one-input">
+                <label>Amount</label>
+                <input onChange={onChangeHandler} className="input-in-card" type="number" min="0" max="10000" name="amount"/>
+            </div>
+
+            <p className="light-purple-gradient">Complete the form card bellow to pay. All fields are required</p>
 
             <form onChange={onChangeHandler} onSubmit={onSubmitHandler}>
-                <label>Card Number</label>
-                <input className="input-in-card" type="text" name="card_number" />
+                <div className="one-input">
+                    <label>Card Number</label>
+                    <input className="input-in-card" type="text" name="card_number" />
+                </div>
 
-                <label>Card Holder Name</label>
-                <input className="input-in-card" type="text" name="card_holder_name"/>
+                <div className="one-input">
+                    <label>Card Holder Name</label>
+                    <input className="input-in-card" type="text" name="card_holder_name"/>
+                </div>
 
-                <label>Card Validity</label>
-                <input className="input-in-card" type="text" name="card_validity"/>
+                <div className="one-input">
+                    <label>Card Validity</label>
+                    <input className="input-in-card" type="text" name="card_validity"/>
+                </div>
 
-                <label>Card secret</label>
-                <input className="input-in-card" type="text" name="card_secret"/>
+                <div className="one-input">
+                    <label>Card secret</label>
+                    <input className="input-in-card" type="text" name="card_secret"/>
+                </div>
+
+                <div className="one-input">
+                    <label>CCV Code</label>
+                    <input className="input-in-card" type="text" name="ccv_code"/>
+                </div>
 
                 <input className="button-color" type="submit" name="submit" />
             </form>
 
-            <p>{ balance }</p>
+            <p>{ message }</p>
         </div>
     );
 }
