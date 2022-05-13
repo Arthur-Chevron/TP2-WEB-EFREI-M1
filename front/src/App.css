@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+.App {
+  text-align: center;
+  font-family: "Roboto Slab", serif;
+
+}
+
+.light-font {
+  font-weight: 300;
+}
+
+.normal-font {
+  font-weight: 400;
+}
+
+.bold-font {
+  font-weight: 700;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background: #222838;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.button-color {
+  padding: 5px 15px;
+  border-radius: 2px;
+  background: linear-gradient(0deg,#5056ed,#5056ed),linear-gradient(76.35deg,#5056ed 40.09%,#9b18f2 125.4%),linear-gradient(0deg,#293040,#293040);
+  opacity: 1;
+  transition: all 0.2s ease-in;
+  font-size: 1.25vw;
+  border:none;
+  color: white;
+}
+
+.section {
+  padding: 3% 3%;
+}
+
+.button-color:hover {
+  opacity: 0.8;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.heading-h1 {
+  font-size: 5vw;
+}
+
+.flex-space-between-align-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.one-card {
+  background: #111727;
+  border-radius: 5px;
+  width: 40%;
+  padding: 3% 4%;
+  text-align: left;
+}
+
+.input-in-card {
+  color: white;
+  width: 94%;
+  padding: 1% 3%;
+  border: none;
+  border-bottom: 1px solid white;
+  background-color: transparent;
+  font-size: 1.25vw;
+  margin: 2% 0;
+}
+
+.select-in-card {
+  width: 100%;
+  padding: 1% 3%;
+  font-size: 1.25vw;
+  margin: 2% 0;
+}
+
+.light-purple-gradient {
+  background: radial-gradient(54.78% 805% at 50% 50%,#c7c9ff 0,#7d82ff 100%);
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.margin-bottom {
+  margin-bottom: 5%;
+}

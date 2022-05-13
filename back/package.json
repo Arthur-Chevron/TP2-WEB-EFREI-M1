@@ -1,0 +1,19 @@
+{
+  "name": "rpc",
+  "version": "1.0.0",
+  "description": "A microservice that validates credit cards payments",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "khodor hammoud",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.2",
+    "nodemon": "^2.0.16"
+  }
+}
